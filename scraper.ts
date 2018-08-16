@@ -107,7 +107,7 @@ async function main() {
                 eventValidation = $("input[name='__EVENTVALIDATION']").val();
                 viewState = $("input[name='__VIEWSTATE']").val();
             } catch (ex) {
-                console.log(`Passed the last page: ${ex.message}`);
+                console.log(`Reached the last page: ${ex.message}`);
                 break;
             }
         }
