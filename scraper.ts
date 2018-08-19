@@ -37,7 +37,7 @@ async function insertRow(database, developmentApplication) {
         sqlStatement.run([
             developmentApplication.applicationNumber,
             developmentApplication.address,
-            developmentApplication.reason,
+            developmentApplication.description,
             developmentApplication.informationUrl,
             developmentApplication.commentUrl,
             developmentApplication.scrapeDate,
@@ -51,9 +51,9 @@ async function insertRow(database, developmentApplication) {
             }
             else {
                 if (this.changes > 0)
-                    console.log(`    Inserted: application \"${developmentApplication.applicationNumber}\" with address \"${developmentApplication.address}\" and reason \"${developmentApplication.reason}\" into the database.`);
+                    console.log(`    Inserted: application \"${developmentApplication.applicationNumber}\" with address \"${developmentApplication.address}\" and description \"${developmentApplication.description}\" into the database.`);
                 else
-                    console.log(`    Skipped: application \"${developmentApplication.applicationNumber}\" with address \"${developmentApplication.address}\" and reason \"${developmentApplication.reason}\" because it was already present in the database.`);
+                    console.log(`    Skipped: application \"${developmentApplication.applicationNumber}\" with address \"${developmentApplication.address}\" and description \"${developmentApplication.description}\" because it was already present in the database.`);
                 sqlStatement.finalize();  // releases any locks
                 resolve(row);
             }
@@ -121,8 +121,8 @@ async function main() {
 
             let applicationNumber = row[0];
             let receivedDate = moment(row[1], "D/MM/YYYY", true);  // allows the leading zero of the day to be omitted
-            let address = row[2];
-            let reason = row[3];
+            let description = row[2];
+            let address = row[3];
 
             // Check for a valid application number and a non-empty address.
 
@@ -132,7 +132,7 @@ async function main() {
             await insertRow(database, {
                 applicationNumber: applicationNumber,
                 address: address,
-                reason: ((reason === "") ? "No description provided" : reason),
+                description: ((description === "") ? "No description provided" : description),
                 informationUrl: DevelopmentApplicationUrl.replace(/\{0\}/g, applicationNumber),
                 commentUrl: CommentUrl,
                 scrapeDate: moment().format("YYYY-MM-DD"),
