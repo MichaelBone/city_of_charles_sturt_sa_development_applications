@@ -134,7 +134,7 @@ async function main() {
                 informationUrl: DevelopmentApplicationUrl.replace(/\{0\}/g, applicationNumber),
                 commentUrl: CommentUrl,
                 scrapeDate: moment().format("YYYY-MM-DD"),
-                receivedDate: receivedDate.isValid ? receivedDate.format("YYYY-MM-DD") : ""
+                receivedDate: receivedDate.isValid() ? receivedDate.format("YYYY-MM-DD") : ""
             });
         }
     }
